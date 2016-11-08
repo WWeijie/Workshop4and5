@@ -1,5 +1,31 @@
 import React from 'react';
 export default class StatusUpdateEntry extends React.Component {
+     constructor(props) {
+     super(props);
+     this.state = {
+     value: ""
+     };
+     }
+     handlePost(e) {
+ // Prevent the event from "bubbling" up the DOM tree.
+  e.preventDefault();
+  // Trim whitespace from beginning + end of entry.
+  var statusUpdateText = this.state.value.trim();
+  if (statusUpdateText !== "") {
+ this.props.onPost(statusUpdateText)
+  // Reset status update.
+  this.setState({value: ""});
+  }
+  }
+  handleChange(e) {
+ // Prevent the event from "bubbling" up the DOM tree.
+ e.preventDefault();
+
+   // e.target is the React Virtual DOM target of the
+   // input event -- the <textarea> element. The textarea's
+   // `value` is the entire contents of what the user has
+   // typed in so far.
+   this.setState({value: e.target.value}); }
 render() {
 return (
 <div className="fb-status-update-entry panel panel-default">
@@ -25,8 +51,9 @@ PIC
 <div className="media-body">
 <div className="form-group">
 <textarea className="form-control" rows="2"
-placeholder="What's on your mind?">
-</textarea>
+placeholder="What's on your mind?"
+value={this.state.value}
+onChange={(e) => this.handleChange(e)} />
 </div>
 </div>
 </div>
@@ -53,7 +80,8 @@ placeholder="What's on your mind?">
 <span className="glyphicon glyphicon-user"></span>
 Friends <span className="caret"></span>
 </button>
-<button type="button" className="btn btn-default">
+<button type="button" className="btn btn-default"
+onClick={(e) => this.handlePost(e)}>
 Post
 </button>
 </div>
