@@ -135,7 +135,11 @@ likeButtonText = "Unlike";
                                     return (
                                         <Comment key={i}
                                             author={comment.author}
-                                            postDate={comment.postDate}>
+                                            postDate={comment.postDate}
+                                            likeCounter={comment.likeCounter}
+                                            feedItemId={data._id}
+                                            data={comment}
+                                            commentIndex={i}>
                                             {comment.contents}
                                         </Comment>
                                     );
